@@ -1,5 +1,6 @@
 import numpy as np
 from norm import *
+from factorial import *
 from vec_input import *
 
 x = np.arange(-10, 6)
@@ -39,3 +40,6 @@ for vec in vectors.items():
             print("{} norm of {} vector: {}".format(norm[0], vec[0], norm[1](vec[1])))
         except ArithmeticError as error:
             print("Error while evaluatin norm: {}".format(error))
+
+n = int(input("Input a number for factorial: "))
+print("{}!: {}".format(n, factorial(n)))
