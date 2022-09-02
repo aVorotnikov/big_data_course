@@ -43,3 +43,9 @@ for vec in vectors.items():
 
 n = int(input("Input a number for factorial: "))
 print("{}!: {}".format(n, factorial(n)))
+
+print("Input 5 dimensional vector")
+vec = read_vec(5)
+print("max coordinate: ", vec.max())
+print("min coordinate: ", vec.min())
+print("sum of coordinates: ", vec.sum())
