@@ -1,4 +1,5 @@
 import numpy as np
+import math as m
 
 
 def norm_2(vec : np.array):
@@ -8,11 +9,11 @@ def norm_2(vec : np.array):
     return np.sqrt(res)
 
 
-def norm_p(vec : np.array, p):
+def norm_p(vec : np.array, p: int):
     res = 0
     for num in vec:
         res += num ** p
-    return res ** (1 / p)
+    return m.pow(res, 1 / p)
 
 
 def norm_weighted(vec : np.array, weights : np.array, eps = 1e-9):
