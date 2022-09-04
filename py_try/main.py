@@ -1,7 +1,8 @@
 import numpy as np
 from norm import *
-from factorial import *
-from vec_input import *
+from factorial import factorial
+from vec_input import read_vec
+
 
 x = np.arange(-10, 6)
 print("x: ", x)
