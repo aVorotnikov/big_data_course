@@ -1,5 +1,4 @@
 import numpy as np
-import math as m
 
 
 def norm_2(vec : np.array):
