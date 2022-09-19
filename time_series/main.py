@@ -24,6 +24,13 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
+fig1a, ax1a = plt.subplots()
+trend_lines = [ax1a.plot(args, sma - y[(param // 2):-(param // 2)], color, label=f'trend - SMA, width={param}')
+    for param, sma, args, color in zip(sma_params, smas, sma_args, sma_colors)]
+plt.legend()
+plt.grid(True)
+plt.show()
+
 smm_params = [21, 51, 111]
 smms = [SMM(y, param) for param in smm_params]
 smm_args = [np.linspace(param // 2, n - param // 2, n - param + 1) for param in smm_params]
@@ -33,6 +40,13 @@ fig2, ax2 = plt.subplots()
 line_disrib2 = ax2.plot(x, y, 'm', label='sqrt(h*k) + N(0, 1)')
 line_trend2 = ax2.plot(x, y_trend, 'k--', label='sqrt(h*k)')
 smm_lines = [ax2.plot(args, smm, color, label=f'SMM, width={param}')
+    for param, smm, args, color in zip(smm_params, smms, smm_args, smm_colors)]
+plt.legend()
+plt.grid(True)
+plt.show()
+
+fig2a, ax2a = plt.subplots()
+trend_lines = [ax2a.plot(args, smm - y[(param // 2):-(param // 2)], color, label=f'trend - SMM, width={param}')
     for param, smm, args, color in zip(smm_params, smms, smm_args, smm_colors)]
 plt.legend()
 plt.grid(True)
