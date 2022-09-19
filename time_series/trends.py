@@ -26,3 +26,12 @@ def SMM(sample: np.array, width):
         part.sort()
         res[j] = part[(width + 1) // 2]
     return res
+
+def EMA(sample: np.array, alpha):
+    if len(sample) <= 1:
+        raise RuntimeError(f'Sample is too small')
+    res = sample.copy()
+    res[0] = (sample[0] + sample[1]) / 2
+    for i in range(1, len(sample)):
+        res[i] = alpha * res[i] + (1 - alpha) * res[i - 1]
+    return res
