@@ -23,13 +23,15 @@ sma_lines = [ax1.plot(args, sma, color, label=f'SMA, width={param}')
 plt.legend()
 plt.grid(True)
 plt.show()
+# plt.savefig('images/sma_trends.png')
 
 fig1a, ax1a = plt.subplots()
-trend_lines = [ax1a.plot(args, sma - y[(param // 2):-(param // 2)], color, label=f'trend - SMA, width={param}')
+trend_lines = [ax1a.plot(args, sma - y[(param // 2):-(param // 2)], color, label=f'remainder - SMA, width={param}')
     for param, sma, args, color in zip(sma_params, smas, sma_args, sma_colors)]
 plt.legend()
 plt.grid(True)
 plt.show()
+# plt.savefig('images/sma_remainders.png')
 
 smm_params = [21, 51, 111]
 smms = [SMM(y, param) for param in smm_params]
@@ -44,6 +46,7 @@ smm_lines = [ax2.plot(args, smm, color, label=f'SMM, width={param}')
 plt.legend()
 plt.grid(True)
 plt.show()
+# plt.savefig('images/smm_trends.png')
 
 fig2a, ax2a = plt.subplots()
 trend_lines = [ax2a.plot(args, smm - y[(param // 2):-(param // 2)], color, label=f'trend - SMM, width={param}')
@@ -51,6 +54,7 @@ trend_lines = [ax2a.plot(args, smm - y[(param // 2):-(param // 2)], color, label
 plt.legend()
 plt.grid(True)
 plt.show()
+# plt.savefig('images/smm_remainders.png')
 
 # z = sample2(n)
 # line2 = ax.plot(x, z, 'g', label='0.5*sin(h*k) + N(0, 1)')
