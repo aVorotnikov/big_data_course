@@ -39,9 +39,10 @@ plt.show()
 with open('data/ema.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow([
+        'Aplha parameter',
         'Turning points', 'Turning points (theory)', 'Turning points (3 sigma interval)', 'Turning points - entry',
         'Kendall', 'Kendall (theory)', 'Kendall (3 sigma interval)', 'Kendall - entry'])
-    for ema in emas:
+    for param, ema in zip(ema_params, emas):
         remainder = ema - y
         tp_value = turning_points(remainder)
         tp_e, tp_d = turning_points_theory(remainder)
@@ -52,6 +53,7 @@ with open('data/ema.csv', 'w', newline='') as csvfile:
         kendall_a = kendall_e - 3 * sqrt(kendall_d)
         kendall_b = kendall_e + 3 * sqrt(kendall_d)
         writer.writerow([
+            param,
             tp_value,
             tp_e,
             f'[{tp_a}; {tp_b}]',
@@ -60,3 +62,46 @@ with open('data/ema.csv', 'w', newline='') as csvfile:
             kendall_e,
             f'[{kendall_a}; {kendall_b}]',
             kendall_a < kendall_value and kendall_value < kendall_b])
+
+y_fft = np.fft.fft(y)
+fig0, ax0 = plt.subplots()
+ax0.plot(x / n, np.abs(y_fft), 'r', label='FFT')
+plt.grid(True)
+plt.show()
+# plt.savefig('images/fft_frequencies.png')
+
+freq = 0.016
+fft_cycles = 0.5 * np.sin(2 * np.pi * freq * x)
+
+fig, ax = plt.subplots()
+ax.plot(x, y, 'b', label='sample')
+ax.plot(x, y_trend, 'k--', label='trend')
+ax.plot(x, fft_cycles, 'r', label=f'fft_cycles with frequency {freq}')
+plt.grid(True)
+plt.legend()
+plt.show()
+# plt.savefig('images/fft_cycles.png')
+
+with open('data/fft.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow([
+        'Turning points', 'Turning points (theory)', 'Turning points (3 sigma interval)', 'Turning points - entry',
+        'Kendall', 'Kendall (theory)', 'Kendall (3 sigma interval)', 'Kendall - entry'])
+    remainder = fft_cycles - y
+    tp_value = turning_points(remainder)
+    tp_e, tp_d = turning_points_theory(remainder)
+    tp_a = tp_e - 3 * sqrt(tp_d)
+    tp_b = tp_e + 3 * sqrt(tp_d)
+    kendall_value = kendall(remainder)
+    kendall_e, kendall_d = kendall_theory(remainder)
+    kendall_a = kendall_e - 3 * sqrt(kendall_d)
+    kendall_b = kendall_e + 3 * sqrt(kendall_d)
+    writer.writerow([
+        tp_value,
+        tp_e,
+        f'[{tp_a}; {tp_b}]',
+        tp_a < tp_value and tp_value < tp_b,
+        kendall_value,
+        kendall_e,
+        f'[{kendall_a}; {kendall_b}]',
+        kendall_a < kendall_value and kendall_value < kendall_b])
