@@ -39,6 +39,7 @@ plt.show()
 with open('data/sma.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow([
+        'Width',
         'Turning points', 'Turning points (theory)', 'Turning points (3 sigma interval)', 'Turning points - entry',
         'Kendall', 'Kendall (theory)', 'Kendall (3 sigma interval)', 'Kendall - entry'])
     for sma, param in zip(smas, sma_params):
@@ -52,6 +53,7 @@ with open('data/sma.csv', 'w', newline='') as csvfile:
         kendall_a = kendall_e - 3 * sqrt(kendall_d)
         kendall_b = kendall_e + 3 * sqrt(kendall_d)
         writer.writerow([
+            param,
             tp_value,
             tp_e,
             f'[{tp_a}; {tp_b}]',
@@ -87,6 +89,7 @@ plt.show()
 with open('data/smm.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow([
+        'Width',
         'Turning points', 'Turning points (theory)', 'Turning points (3 sigma interval)', 'Turning points - entry',
         'Kendall', 'Kendall (theory)', 'Kendall (3 sigma interval)', 'Kendall - entry'])
     for smm, param in zip(smms, smm_params):
@@ -100,6 +103,7 @@ with open('data/smm.csv', 'w', newline='') as csvfile:
         kendall_a = kendall_e - 3 * sqrt(kendall_d)
         kendall_b = kendall_e + 3 * sqrt(kendall_d)
         writer.writerow([
+            param,
             tp_value,
             tp_e,
             f'[{tp_a}; {tp_b}]',
