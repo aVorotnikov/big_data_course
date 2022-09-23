@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
+import scipy
 from math import sqrt
 from criteria import *
 
@@ -41,7 +42,8 @@ with open('data/ema.csv', 'w', newline='') as csvfile:
     writer.writerow([
         'Aplha parameter',
         'Turning points', 'Turning points (theory)', 'Turning points (3 sigma interval)', 'Turning points - entry',
-        'Kendall', 'Kendall (theory)', 'Kendall (3 sigma interval)', 'Kendall - entry'])
+        'Kendall', 'Kendall (theory)', 'Kendall (3 sigma interval)', 'Kendall - entry',
+        'Kolmogorov-Smirnov pvalue'])
     for param, ema in zip(ema_params, emas):
         remainder = ema - y
         tp_value = turning_points(remainder)
@@ -52,6 +54,7 @@ with open('data/ema.csv', 'w', newline='') as csvfile:
         kendall_e, kendall_d = kendall_theory(remainder)
         kendall_a = kendall_e - 3 * sqrt(kendall_d)
         kendall_b = kendall_e + 3 * sqrt(kendall_d)
+        ks = scipy.stats.kstest(remainder, scipy.stats.norm.cdf).pvalue
         writer.writerow([
             param,
             tp_value,
@@ -61,7 +64,8 @@ with open('data/ema.csv', 'w', newline='') as csvfile:
             kendall_value,
             kendall_e,
             f'[{kendall_a}; {kendall_b}]',
-            kendall_a < kendall_value and kendall_value < kendall_b])
+            kendall_a < kendall_value and kendall_value < kendall_b,
+            ks])
 
 y_fft = np.fft.fft(y)
 fig0, ax0 = plt.subplots()
@@ -93,7 +97,8 @@ with open('data/fft.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow([
         'Turning points', 'Turning points (theory)', 'Turning points (3 sigma interval)', 'Turning points - entry',
-        'Kendall', 'Kendall (theory)', 'Kendall (3 sigma interval)', 'Kendall - entry'])
+        'Kendall', 'Kendall (theory)', 'Kendall (3 sigma interval)', 'Kendall - entry',
+        'Kolmogorov-Smirnov pvalue'])
     remainder = fft_cycles - y
     tp_value = turning_points(remainder)
     tp_e, tp_d = turning_points_theory(remainder)
@@ -103,6 +108,7 @@ with open('data/fft.csv', 'w', newline='') as csvfile:
     kendall_e, kendall_d = kendall_theory(remainder)
     kendall_a = kendall_e - 3 * sqrt(kendall_d)
     kendall_b = kendall_e + 3 * sqrt(kendall_d)
+    ks = scipy.stats.kstest(remainder, scipy.stats.norm.cdf).pvalue
     writer.writerow([
         tp_value,
         tp_e,
@@ -111,4 +117,5 @@ with open('data/fft.csv', 'w', newline='') as csvfile:
         kendall_value,
         kendall_e,
         f'[{kendall_a}; {kendall_b}]',
-        kendall_a < kendall_value and kendall_value < kendall_b])
+        kendall_a < kendall_value and kendall_value < kendall_b,
+        ks])
