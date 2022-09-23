@@ -1,2 +1,2 @@
-Turning points,Turning points (theory),Turning points (3 sigma interval),Turning points - entry,Kendall,Kendall (theory),Kendall (3 sigma interval),Kendall - entry
-655,665.3333333333334,[625.3695997740174; 705.2970668926494],True,-0.003995995995995982,0,[-0.06335624684286478; 0.06335624684286478],True
+Turning points,Turning points (theory),Turning points (3 sigma interval),Turning points - entry,Kendall,Kendall (theory),Kendall (3 sigma interval),Kendall - entry,Kolmogorov-Smirnov pvalue
+663,665.3333333333334,[625.3695997740174; 705.2970668926494],True,0.0050090090090091355,0,[-0.06335624684286478; 0.06335624684286478],True,0.03114840758996784
